@@ -1,0 +1,72 @@
+package com.xszymo.hibernate.tables;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "users")
+@Entity
+public class User {
+
+	@Id
+	@GeneratedValue
+	private long id;
+
+	@Column
+	private String username;
+
+	@Column
+	private String password;
+
+	public long getId() {
+		return id;
+	}
+
+	public User(String username) {
+		super();
+		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+	}
+
+	public User() {
+		super();
+	}
+
+	public User(long id, String username, String password) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUser(User user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+	}
+}
