@@ -29,15 +29,18 @@ public class QuestionMessageDaoImpl extends AbstractDao<Long, Question> implemen
 		return getByKey(id);
 	}
 
-	// @Override
-	// public Question findByMessage(String message) {
-	// Query query = sessionFactory.getCurrentSession().createQuery("from
-	// questions where message=:message");
-	// query.setParameter("message", message);
-	// Question category = (Question) query.uniqueResult();
-	//
-	// return category;
-	// }
+	/*
+	 * no implement yet
+	 */
+	@Override
+	 public Question findByMessage(String message) {
+//	 Query query = sessionFactory.getCurrentSession().createQuery("from
+//	 questions where message=:message");
+//	 query.setParameter("message", message);
+//	 Question category = (Question) query.uniqueResult();
+	
+	 return null;
+	 }
 
 	@Override
 	public void persistQuestion(Question message) {
