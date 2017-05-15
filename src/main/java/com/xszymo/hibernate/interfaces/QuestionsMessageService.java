@@ -17,6 +17,4 @@ public interface QuestionsMessageService {
 	void delete(long id);
 
 	void update(Question employee);
-
-	Question findByMessage(String message); 
 }

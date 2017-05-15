@@ -23,11 +23,6 @@ public class QuestionMessageServiceImpl implements QuestionsMessageService {
 	public Question findById(long id) {
 		return questionMessageDao.findById(id);
 	}
-	
-	@Override
-	public Question findByMessage(String message) {
-		return findByMessage(message);
-	}
 
 	@Override
 	public void persist(Question employee) {
