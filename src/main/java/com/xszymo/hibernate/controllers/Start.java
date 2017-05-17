@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class AppController {
+public class Start {
 	@RequestMapping
 	public String start() {
 		return "start";
