@@ -18,6 +18,7 @@ public class Answer {
 
 	@Column(name = "message")
 	private String message;
+
 	@Column
 	private long counter;
 
@@ -81,5 +82,4 @@ public class Answer {
 	public void setCounter(long counter) {
 		this.counter = counter;
 	}
-
 }

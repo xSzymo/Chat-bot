@@ -16,5 +16,7 @@ public interface QuestionsMessageDao {
 	List<Question> findAllQuestions();
 
 	void updateQuestion(Question message);
+	
+	Question findByMessage(String message);
 
 }

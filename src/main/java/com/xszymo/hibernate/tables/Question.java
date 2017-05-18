@@ -18,7 +18,7 @@ public class Question {
 	@GeneratedValue
 	private long id;
 
-	@Column(name = "message")
+	@Column(name = "message", nullable = false, unique = true)
 	private String message;
 
 	@Column

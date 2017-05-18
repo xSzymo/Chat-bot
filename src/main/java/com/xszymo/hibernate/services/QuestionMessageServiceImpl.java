@@ -2,6 +2,9 @@ package com.xszymo.hibernate.services;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,11 @@ public class QuestionMessageServiceImpl implements QuestionsMessageService {
 	@Override
 	public Question findById(long id) {
 		return questionMessageDao.findById(id);
+	}
+	
+	@Override
+	public Question findByMessage(String message) {
+		return questionMessageDao.findByMessage(message);
 	}
 
 	@Override

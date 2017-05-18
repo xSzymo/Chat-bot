@@ -30,10 +30,10 @@ public class AnswerMessageDaoImpl extends AbstractDao<Long, Answer> implements A
 			if (message.getQuestion().getMessage().equals(x.getMessage())) {
 
 				Question que = question.findById(x.getId());
-				for (Answer x1 : que.getAnswers()) 
+				for (Answer x1 : que.getAnswers())
 					if (x1.getMessage().equals(message.getMessage())) {
 						x1.setQuestion(que);
-						x1.setCounter(x1.getCounter()+1);
+						x1.setCounter(x1.getCounter() + 1);
 						question.update(que);
 						update(x1);
 						return;
@@ -62,11 +62,19 @@ public class AnswerMessageDaoImpl extends AbstractDao<Long, Answer> implements A
 
 	@Override
 	public void deleteAnswer(Answer message) {
-		delete(message);
+		try {
+			delete(message);
+		} catch (NullPointerException e) {
+			return;
+		}
 	}
 
 	@Override
 	public void deleteAnswer(long id) {
-		delete(findById(id));
+		try {
+			delete(findById(id));
+		} catch (NullPointerException e) {
+			return;
+		}
 	}
 }
