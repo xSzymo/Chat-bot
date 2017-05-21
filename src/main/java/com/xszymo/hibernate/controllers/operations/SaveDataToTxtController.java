@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.controllers;
+package com.xszymo.hibernate.controllers.operations;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

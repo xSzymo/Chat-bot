@@ -6,7 +6,7 @@
   <packaging>war</packaging>
 
 	<properties>
-    <failOnMissingWebXml>false</failOnMissingWebXml>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<java-version>1.8</java-version>
 		<springframework.version>4.0.6.RELEASE</springframework.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
@@ -19,6 +19,31 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>2.1.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
