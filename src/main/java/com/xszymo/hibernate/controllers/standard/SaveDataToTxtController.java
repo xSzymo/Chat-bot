@@ -1,18 +1,16 @@
-package com.xszymo.hibernate.controllers.operations;
+package com.xszymo.hibernate.controllers.standard;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xszymo.hibernate.configuration.LoadAtStart;
 import com.xszymo.hibernate.interfaces.AnswersMessageService;
 import com.xszymo.hibernate.interfaces.QuestionsMessageService;
-import com.xszymo.hibernate.interfaces.UserService;
 import com.xszymo.hibernate.tables.Answer;
 import com.xszymo.hibernate.tables.Question;
 

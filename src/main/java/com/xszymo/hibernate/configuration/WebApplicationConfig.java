@@ -59,11 +59,10 @@ public class WebApplicationConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public TemplateResolver templateResolver() {
 		ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-		resolver.setPrefix("/WEB-INF/templates/");
+		resolver.setPrefix("/WEB-INF/");
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode("HTML5");
 		resolver.setCacheable(false);
 		return resolver;
 	}
-
 }

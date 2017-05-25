@@ -3,15 +3,7 @@ package com.xszymo.hibernate.dao;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Root;
-
 import org.hibernate.Criteria;
-import org.hibernate.criterion.CriteriaQuery;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
