@@ -8,6 +8,7 @@ $(document).ready(function() {
 		that.chatContent = ko.observable('');
 		that.message = ko.observable('');
 		that.messageIndex = ko.observable(0);
+		that.chatId = ko.observable(null);
 		that.activePollingXhr = ko.observable(null);
 		
 		var keepPolling = false;
@@ -23,6 +24,7 @@ $(document).ready(function() {
 			if (!keepPolling) {
 				return;
 			}
+			
 			var form = $("#joinChatForm");
 			that.activePollingXhr($.ajax({url : form.attr("action"), type : "GET", data : form.serialize(),cache: false,
 				success : function(messages) {
@@ -46,8 +48,7 @@ $(document).ready(function() {
 			if (that.message().trim() != '') {
 				var form = $("#postMessageForm");
 				$.ajax({url : form.attr("action"), type : "POST",
-				//	  data : "message=[" + that.userName() + "] " + $("#postMessageForm input[name=message]").val(),
-					  data : "message=" + $("#postMessageForm input[name=message]").val(),
+					  data : "message=" + $("#postMessageForm input[name=message]").val() + "&user=" + that.userName(),
 					error : function(xhr) {
 						console.error("Error posting chat message: status=" + xhr.status + ", statusText=" + xhr.statusText);
 					}
@@ -68,13 +69,10 @@ $(document).ready(function() {
 			that.message('');
 			that.messageIndex(0);
 			that.chatContent('');
+			location.reload();
 		}
-		
 	}
 
-	//Activate knockout.js
 	ko.applyBindings(new ChatViewModel());
-	
 });
-
 

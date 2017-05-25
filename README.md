@@ -4,7 +4,8 @@
 ## Beta version<br><br>
 
 ### Before you start : 
-Look at application.properties in resources & LoadAtStart class where you can load asks from the txt file
+Look at application.properties in resources & LoadAtStart class where you can load asks from the txt file<br>
+run with "mvn jetty:run"<br>
 
 ### Sources :
 
