@@ -24,7 +24,7 @@ import com.xszymo.hibernate.tables.Question;
 public class LoadAtStart {
 	public static final String PATH_QUESTIONS = "/home/xszymo/Desktop/Programming/text.txt";
 	public static final boolean readQuestionsAndAnswersFromTxt = false;
-
+/*
 	@Resource(name = "answerMessageService")
 	AnswersMessageService answer;
 
@@ -97,5 +97,5 @@ public class LoadAtStart {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 }
