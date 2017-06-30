@@ -24,14 +24,21 @@ $(document).ready(function() {
 			if (!keepPolling) {
 				return;
 			}
-			
-			var form = $("#joinChatForm");
-			that.activePollingXhr($.ajax({url : form.attr("action"), type : "GET", data : form.serialize(),cache: false,
+
+			that.activePollingXhr(
+			$.ajax({
+			url : "chat",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+			type : "GET",
+			cache: false,
 				success : function(messages) {
-					for ( var i = 0; i < messages.length; i++) {
-						that.chatContent(that.chatContent() + messages[i] + "\n");
-						that.messageIndex(that.messageIndex() + 1);
-					}
+                    var text = "";
+
+                    for(var i = 0; i < messages.length; i++)
+                        text += messages[i] + "\n";
+
+                    that.chatContent(text);
 				},
 				error : function(xhr) {
 					if (xhr.statusText != "abort" && xhr.status != 503) {
@@ -46,10 +53,18 @@ $(document).ready(function() {
 
 		that.postMessage = function() {
 			if (that.message().trim() != '') {
-				var form = $("#postMessageForm");
-				$.ajax({url : form.attr("action"), type : "POST",
-					  data : "message=" + $("#postMessageForm input[name=message]").val() + "&user=" + that.userName(),
-					error : function(xhr) {
+             var chat = {
+                "id" : that.chatId(),
+                "message" : that.message(),
+                "user" : that.userName()
+               }
+				$.ajax(	{
+				url : "chat",
+				type : "POST",
+                contentType : 'application/json; charset=utf-8',
+                dataType : 'json',
+                data: JSON.stringify(chat),
+                error : function(xhr) {
 						console.error("Error posting chat message: status=" + xhr.status + ", statusText=" + xhr.statusText);
 					}
 				});

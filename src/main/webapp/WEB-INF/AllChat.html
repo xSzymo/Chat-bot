@@ -11,7 +11,7 @@
 		<p>
 			<label for="user">User: </label>
 			<input id="user" name="user" type="text" data-bind="value: userName"/>
-			<input name="messageIndex" type="hidden" data-bind="value: messageIndex"/>
+			<input id="chatId1" name="chatId" type="hidden" data-bind="value: chatId"/>
 			<button id="start" type="submit" data-bind="click: joinChat">Join Chat</button>
 		</p>
 	</form>
@@ -29,6 +29,8 @@
 	
 	<form id="postMessageForm" th:action="@{/chat}" data-bind="visible: activePollingXhr() != null">
 		<p>
+			<input id="chatId" name="chatId" type="hidden" data-bind="value: chatId"/>
+			<input id="user1" name="user" type="hidden" data-bind="value: userName"/>
 			<input id="message" name="message" type="text" data-bind="value: message" />
 			<button id="post" type="submit" data-bind="click: postMessage">Post</button>
 		</p>
@@ -37,6 +39,6 @@
 </body>
 <script type="text/javascript" src="../../../resources/js/jquery-1.7.2.min.js" th:src="@{/resources/js/chat/jquery-1.7.2.min.js}"></script>
 <script type="text/javascript" src="../../../resources/js/knockout-2.0.0.js" th:src="@{/resources/js/chat/knockout-2.0.0.js}"></script>
-<script type="text/javascript" src="../../../resources/js/chat.js" th:src="@{/resources/js/chat/chat.js}"></script>
+<script type="text/javascript" src="../../../resources/js/chat.js" th:src="@{/resources/js/chat/AllChat.js}"></script>
 
 </html>
