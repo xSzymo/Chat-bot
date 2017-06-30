@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xszymo.hibernate.configuration.LoadAtStart;
-import com.xszymo.hibernate.interfaces.AnswersMessageService;
-import com.xszymo.hibernate.interfaces.QuestionsMessageService;
-import com.xszymo.hibernate.tables.Answer;
-import com.xszymo.hibernate.tables.Question;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
+import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
+import com.xszymo.hibernate.data.tables.Answer;
+import com.xszymo.hibernate.data.tables.Question;
 
 @Controller
 public class SaveDataToTxtController {

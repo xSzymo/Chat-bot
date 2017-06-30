@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.tables;
+package com.xszymo.hibernate.data.tables;
 
 import java.util.Collection;
 import java.util.LinkedList;

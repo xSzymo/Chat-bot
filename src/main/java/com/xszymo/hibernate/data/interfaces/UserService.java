@@ -1,7 +1,7 @@
-package com.xszymo.hibernate.interfaces;
+package com.xszymo.hibernate.data.interfaces;
 
 import java.util.Collection;
-import com.xszymo.hibernate.tables.User;
+import com.xszymo.hibernate.data.tables.User;
 
 
 public interface UserService {

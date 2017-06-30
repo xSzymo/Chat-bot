@@ -1,7 +1,7 @@
-package com.xszymo.hibernate.interfaces;
+package com.xszymo.hibernate.data.interfaces;
 
 import java.util.List;
-import com.xszymo.hibernate.tables.Answer;
+import com.xszymo.hibernate.data.tables.Answer;
 
 public interface AnswersMessageService {
 

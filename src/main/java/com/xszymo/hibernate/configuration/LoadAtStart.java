@@ -14,15 +14,15 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import com.xszymo.hibernate.interfaces.AnswersMessageService;
-import com.xszymo.hibernate.interfaces.QuestionsMessageService;
-import com.xszymo.hibernate.interfaces.UserService;
-import com.xszymo.hibernate.tables.Answer;
-import com.xszymo.hibernate.tables.Question;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
+import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
+import com.xszymo.hibernate.data.interfaces.UserService;
+import com.xszymo.hibernate.data.tables.Answer;
+import com.xszymo.hibernate.data.tables.Question;
 
 @Configuration
 public class LoadAtStart {
-	public static final String PATH_QUESTIONS = "/home/xszymo/Desktop/Programming/text.txt";
+	public static final String PATH_QUESTIONS = "D:/ProjectsSL/Chat-botV6/src/main/resources/text.txt";
 	public static final boolean readQuestionsAndAnswersFromTxt = false;
 
 	@Resource(name = "answerMessageService")
@@ -35,7 +35,7 @@ public class LoadAtStart {
 	UserService userService;
 
 	@PostConstruct
-	public void halo() throws IOException {
+	public void runAtStart() throws IOException {
 		// String everything = "";
 		if (readQuestionsAndAnswersFromTxt) {
 			File file = new File(PATH_QUESTIONS);

@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.services;
+package com.xszymo.hibernate.data.services;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xszymo.hibernate.interfaces.AnswersMessageDao;
-import com.xszymo.hibernate.interfaces.AnswersMessageService;
-import com.xszymo.hibernate.tables.Answer;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageDao;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
+import com.xszymo.hibernate.data.tables.Answer;
 
 @Transactional
 @Service("answerMessageService")

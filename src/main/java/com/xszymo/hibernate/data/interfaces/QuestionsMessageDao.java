@@ -1,7 +1,7 @@
-package com.xszymo.hibernate.interfaces;
+package com.xszymo.hibernate.data.interfaces;
 
 import java.util.List;
-import com.xszymo.hibernate.tables.Question;
+import com.xszymo.hibernate.data.tables.Question;
 
 public interface QuestionsMessageDao {
 

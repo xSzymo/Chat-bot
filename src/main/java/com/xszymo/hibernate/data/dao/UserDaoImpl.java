@@ -1,11 +1,11 @@
-package com.xszymo.hibernate.dao;
+package com.xszymo.hibernate.data.dao;
 
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.xszymo.hibernate.interfaces.UserDao;
-import com.xszymo.hibernate.tables.User;
+import com.xszymo.hibernate.data.interfaces.UserDao;
+import com.xszymo.hibernate.data.tables.User;
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {

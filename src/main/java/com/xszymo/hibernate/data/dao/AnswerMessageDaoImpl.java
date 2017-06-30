@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.dao;
+package com.xszymo.hibernate.data.dao;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import javax.annotation.Resource;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.xszymo.hibernate.interfaces.AnswersMessageDao;
-import com.xszymo.hibernate.interfaces.QuestionsMessageService;
-import com.xszymo.hibernate.tables.Answer;
-import com.xszymo.hibernate.tables.Question;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageDao;
+import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
+import com.xszymo.hibernate.data.tables.Answer;
+import com.xszymo.hibernate.data.tables.Question;
 
 @Repository("answerMessageDao")
 public class AnswerMessageDaoImpl extends AbstractDao<Long, Answer> implements AnswersMessageDao {

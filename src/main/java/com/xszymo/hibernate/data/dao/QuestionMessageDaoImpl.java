@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.dao;
+package com.xszymo.hibernate.data.dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.xszymo.hibernate.interfaces.AnswersMessageDao;
-import com.xszymo.hibernate.interfaces.QuestionsMessageDao;
-import com.xszymo.hibernate.tables.Answer;
-import com.xszymo.hibernate.tables.Question;
+import com.xszymo.hibernate.data.interfaces.AnswersMessageDao;
+import com.xszymo.hibernate.data.interfaces.QuestionsMessageDao;
+import com.xszymo.hibernate.data.tables.Answer;
+import com.xszymo.hibernate.data.tables.Question;
 
 @Repository("questionMessageDao")
 public class QuestionMessageDaoImpl extends AbstractDao<Long, Question> implements QuestionsMessageDao {

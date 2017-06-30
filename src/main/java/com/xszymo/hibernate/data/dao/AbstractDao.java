@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.dao;
+package com.xszymo.hibernate.data.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
