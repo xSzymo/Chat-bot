@@ -13,41 +13,47 @@ public class ChatRooms {
     public LinkedList<MyChat> myChat = new LinkedList<MyChat>();
 
     @GetMapping("createChatId")
-    public @ResponseBody String createChatId() {
-        MyChat a = new MyChat();
-        a.id = createId();
-        myChat.add(a);
-        return a.id;
+    public @ResponseBody
+    ChatJSON createChatId() {
+        MyChat chat = createNewChat();
+        return new ChatJSON(chat);
     }
 
     @PostMapping("checkChatId")
     public @ResponseBody
-    String checkChatId(@RequestBody ChatJSON clientChat) {
-        MyChat existingChat = findOne(clientChat.id);
+    ChatJSON checkChatId(@RequestBody ChatJSON clientChat) {
+        MyChat existingChat = findOne(clientChat.getId());
         if (existingChat == null)
             return createChatId();
 
-        return clientChat.id;
+        return new ChatJSON(existingChat);
     }
 
-    @GetMapping
-    public LinkedList<String> getMessages(@RequestParam String chatId, @RequestParam LinkedList<String> messages, @RequestParam String user) {
-        System.out.println("here");
-        MyChat chat = findOne(chatId);
-        if (chat == null || chat.messages.size() == messages.size())
-            return messages;
+    @PostMapping("getMessages")
+    public LinkedList<String> getMessages(@RequestBody ChatJSON clientChat) {
+        MyChat chat = findOne(clientChat.getId());
+        if (chat == null)
+            return clientChat.getMessages();
 
         return chat.messages;
     }
 
 
-    @PostMapping
-    public void postMessage(@RequestParam String chatId, @RequestParam String message, @RequestParam String user) {
-        MyChat chat = findOne(chatId);
+    @PostMapping("postMessage")
+    public void postMessage(@RequestBody ChatJSON clientChat) {
+        MyChat chat = findOne(clientChat.getId());
         if (chat == null)
             return;
 
-        chat.messages.add(user + " : " + message);
+        chat.messages.add(clientChat.getUser() + " : " + clientChat.getMessage());
+    }
+
+
+    public MyChat createNewChat() {
+        MyChat a = new MyChat();
+        a.id = createId();
+        myChat.add(a);
+        return a;
     }
 
 

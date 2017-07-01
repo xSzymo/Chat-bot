@@ -22,9 +22,9 @@ public class AllChat {
     public void postMessage(@RequestBody ChatJSON chat) {
         if (myChat == null)
             return;
-        if (chat.message == null)
+        if (chat.getMessages() == null)
             return;
 
-        myChat.messages.add(chat.user + " : " + chat.message);
+        myChat.messages.add(chat.getUser() + " : " + chat.getMessage());
     }
 }

@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>Chat</h1>
+	<button id="demo" onclick="copyToClipboard(document.getElementById('chatIdToCopy').innerHTML)"
+			data-bind="visible: activePollingXhr() != null" >Show id</button>
+
+<div id="chatIdToCopy" style="display: none;"></div>
+
 
 <form id="joinChatForm" th:action="@{/chat}" data-bind="visible: activePollingXhr() == null">
 	<p>
@@ -15,6 +20,7 @@
 		<input id="chatId" name="chatId" type="text" data-bind="value: chatId"/>
 		<input name="messages" type="hidden" data-bind="value: messages"/>
 		<button id="start" type="submit" data-bind="click: joinChat">Join Chat</button>
+		<button id="start1" type="submit" data-bind="click: joinChat">Create chat token</button>
 	</p>
 </form>
 

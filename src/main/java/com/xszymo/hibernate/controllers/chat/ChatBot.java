@@ -40,7 +40,6 @@ public class ChatBot {
     public @ResponseBody
     String checkChatId(@RequestBody MyChat chat) {
         String chatId = chat.id;
-        System.out.println("xcbxcb id " + chatId);
 
         MyChat existingChat = findOne(chatId);
         if (existingChat == null)
@@ -62,17 +61,14 @@ public class ChatBot {
 
     @PostMapping
     public void postMessage(@RequestParam String chatId, @RequestParam String message, @RequestParam String user) {
-        System.out.println("chxcbcxbxcat id " + chatId);
         MyChat chat = findOne(chatId);
         if (chat == null)
             return;
-        System.out.println("chaasfvxxt id " + chatId);
 
         Question a = question.findByMessage(message);
         String botMessage = "Not implemented yet :(";
 
         if (a != null) {
-            System.out.println(a.getMessage());
             long b = 0;
             for (Answer x : a.getAnswers())
                 if (b <= x.getCounter()) {
@@ -80,7 +76,6 @@ public class ChatBot {
                     b = x.getCounter();
                 }
         }
-        System.out.println("chbcxat id " + chatId);
 
         chat.messages.add("You : " + message);
         chat.messages.add("Bot : " + botMessage);

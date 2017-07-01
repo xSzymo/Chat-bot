@@ -17,6 +17,14 @@ $(document).ready(function() {
 		
 		var keepPolling = false;
 
+		function wait(ms){
+           var start = new Date().getTime();
+           var end = start;
+           while(end < start + ms) {
+             end = new Date().getTime();
+          }
+        }
+
 		that.joinChat = function() {
 			if (that.userName().trim() != '') {
 				keepPolling = true;
@@ -42,12 +50,13 @@ $(document).ready(function() {
                  type: "GET",
                  url: "chatRoom/createChatId",
                  success: function(result) {
-                 that.chatId(result);
+                 that.chatId(result.id);
                 }});
            	}
 
              var miniChat = {
-              "id" : that.chatId()
+              "id" : that.chatId(),
+              "user" : that.userName()
                }
                $.ajax({
                     type: "POST",
@@ -56,22 +65,29 @@ $(document).ready(function() {
                     url: "chatRoom/checkChatId",
                     data: JSON.stringify(miniChat),
                     success :function(result) {
-                    that.chatId(result);
+                        that.chatId(result.id);
+                        document.getElementById('chatIdToCopy').innerHTML = that.chatId();
                   }});
+                        sleep(50);
 
+            console.log(that.chatId());
 
-            //document.getElementById('currentChatId').innerHTML = "Chat id : " + that.chatId();
-            //
-            //
-           // document.getElementById('chatIdToCopy').innerHTML = that.chatId();
+           if(that.chatId() != null) {
 
-
-
-
-			var form = $("#joinChatForm");
-			that.activePollingXhr($.ajax({url : form.attr("action"), type : "GET",
-			 data : form.serialize(),cache: false,
-				success : function(messages) {
+             var miniChat = {
+              "id" : that.chatId(),
+              "user" : that.userName(),
+              "message" : that.message()
+            }
+			that.activePollingXhr(
+			$.ajax( {
+			url : "chatRoom/getMessages",
+			type : "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            data: JSON.stringify(miniChat),
+			cache: false,
+		    success : function(messages) {
                     var text = "";
 
                     for(var i = 0; i < messages.length; i++)
@@ -88,49 +104,28 @@ $(document).ready(function() {
 				complete : pollForMessages
 			}));
 			$('#message').focus();
+			}
 		}
 
-//             var miniChat = {
-//                "id" : that.chatId123(),
-//                "message" : that.message(),
-//                "messages" : that.messages(),
-//                "user" : that.userName()
-//               }
-//			that.activePollingXhr(
-//			$.ajax({
-//                    type: "POST",
-//                    contentType : 'application/json; charset=utf-8',
-//                    dataType : 'json',
-//                    url: "chatRoom/getMessages",
-//                    data: JSON.stringify(miniChat),
-//			        //cache: false,
-//				success : function(messages) {
-//                    var text = "";
-//
-//                    for(var i = 0; i < messages.length; i++)
-//                        text += messages[i] + "\n";
-//
-//                    that.chatContent(text);
-//				},
-//				error : function(xhr) {
-//					if (xhr.statusText != "abort" && xhr.status != 503) {
-//						resetUI();
-//						console.error("Unable to retrieve chat messages. Chat ended.");
-//					}
-//				sleep(10000);
-//				},
-//				complete : pollForMessages
-//			}));
-//			$('#message').focus();
-//		}
 
 
 		that.postMessage = function() {
+
 			if (that.message().trim() != '') {
-				var form = $("#postMessageForm");
-				$.ajax({url : form.attr("action"), type : "POST",
-					  data : "chatId=" + that.chatId() + "&message=" + $("#postMessageForm input[name=message]").val() + "&user=" + that.userName(),
-					error : function(xhr) {
+
+			             var miniChat = {
+                          "id" : that.chatId(),
+                          "user" : that.userName(),
+                          "message" : $("#postMessageForm input[name=message]").val()
+                        }
+
+				$.ajax({
+			        url : "chatRoom/postMessage",
+			        type : "POST",
+                    contentType : 'application/json; charset=utf-8',
+                    dataType : 'json',
+                    data: JSON.stringify(miniChat),
+			  	    error : function(xhr) {
 						console.error("Error posting chat message: status=" + xhr.status + ", statusText=" + xhr.statusText);
 					}
 				});
