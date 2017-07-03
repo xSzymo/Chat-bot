@@ -1,4 +1,4 @@
-package com.xszymo.hibernate.configuration;
+package com.xszymo.hibernate.controllers.standard;
 
 
 import java.io.BufferedReader;
@@ -19,11 +19,14 @@ import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
 import com.xszymo.hibernate.data.interfaces.UserService;
 import com.xszymo.hibernate.data.tables.Answer;
 import com.xszymo.hibernate.data.tables.Question;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
-@Configuration
+@Controller
 public class LoadAtStart {
 	public static final String PATH_QUESTIONS = "D:/ProjectsSL/Chat-botV6/src/main/resources/text.txt";
-	public static final boolean readQuestionsAndAnswersFromTxt = false;
 
 	@Resource(name = "answerMessageService")
 	AnswersMessageService answer;
@@ -31,13 +34,8 @@ public class LoadAtStart {
 	@Resource(name = "questionMessageService")
 	QuestionsMessageService question;
 
-	@Autowired
-	UserService userService;
-
-	@PostConstruct
-	public void runAtStart() throws IOException {
-		// String everything = "";
-		if (readQuestionsAndAnswersFromTxt) {
+	@GetMapping("load/questions/from/data/base")
+	public RedirectView loadQuestions() throws IOException {
 			File file = new File(PATH_QUESTIONS);
 			if (!(file.exists() && !file.isDirectory())) {
 				Writer writer = new BufferedWriter(
@@ -92,10 +90,10 @@ public class LoadAtStart {
 				sb.append(System.lineSeparator());
 				line = br.readLine();
 
-				// everything = sb.toString();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+
+		return new RedirectView("localhost:8080");
 	}
 }

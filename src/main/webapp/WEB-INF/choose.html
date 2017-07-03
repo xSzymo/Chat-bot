@@ -4,10 +4,50 @@
 	<title>Chat</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
+<style>
+#container {
+    width:100%;
+    text-align:center;
+}
+
+#left {
+    float:left;
+    width:100px;
+}
+
+#center {
+    display: inline-block;
+    margin:0 auto;
+    width:100px;
+}
+
+#right {
+    float:right;
+    width:100px;
+}
+</style>
+
+
 <body>
-	<h1>Chat</h1>
-	<a href="/allChat">all chat</a><br></br>
-	<a href="/chatRooms">room chat</a><br></br>
-	<a href="/chatBot">bot chat</a><br></br>
+
+<div id="container">
+	<div id="center">
+		<h1>Chat</h1>
+	</div>
+	<div id="left">
+		<br></br><br></br><br></br>
+		<a href="/allChat">all chat</a><br></br>
+		<a href="/chatRooms">room chat</a><br></br>
+		<a href="/chatBot">bot chat</a><br></br>
+	</div>
+	<div id="right">
+		<br></br>
+		<a href="/load/questions/from/data/base">Load questions from txt file</a><br></br>
+		<br></br>
+		<a href="saveToTxtFile">Save currently data to txt file</a><br></br>
+	</div>
+</div>
+
 </body>
 </html>

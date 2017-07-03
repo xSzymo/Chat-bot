@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.xszymo.hibernate.configuration.LoadAtStart;
 import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
 import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
 import com.xszymo.hibernate.data.tables.Answer;
