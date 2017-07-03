@@ -35,7 +35,7 @@ $(document).ready(function() {
                  type: "GET",
                  url: "chatWithBot/createChatId",
                  success: function(result) {
-                 that.chatId(result);
+                 that.chatId(result.id);
                 }});
            	}
 
@@ -49,7 +49,7 @@ $(document).ready(function() {
                     url: "chatWithBot/checkChatId",
                     data: JSON.stringify(chatId),
                     success :function(result) {
-                    that.chatId(result);
+                    that.chatId(result.id);
                   }});
 
             //document.getElementById('currentChatId').innerHTML = "Chat id : " + that.chatId();
@@ -57,9 +57,20 @@ $(document).ready(function() {
 
 
 
+             var miniChat = {
+              "id" : that.chatId(),
+              "user" : that.userName(),
+              "message" : that.message()
+            }
 			var form = $("#joinChatForm");
-			that.activePollingXhr($.ajax({url : form.attr("action"), type : "GET",
-			 data : form.serialize(),cache: false,
+			that.activePollingXhr(
+			$.ajax({
+			url : "chatWithBot/getMessages",
+			type : "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            data: JSON.stringify(miniChat),
+			cache: false,
 				success : function(messages) {
                     var text = "";
 
@@ -82,10 +93,20 @@ $(document).ready(function() {
 
 		that.postMessage = function() {
 			if (that.message().trim() != '') {
-				var form = $("#postMessageForm");
-				$.ajax({url : form.attr("action"), type : "POST",
-					  data : "chatId=" + that.chatId() + "&message=" + $("#postMessageForm input[name=message]").val() + "&user=" + that.userName(),
-					error : function(xhr) {
+
+			             var miniChat = {
+                          "id" : that.chatId(),
+                          "user" : that.userName(),
+                          "message" : $("#postMessageForm input[name=message]").val()
+                        }
+
+				$.ajax({
+			        url : "chatWithBot/postMessage",
+			        type : "POST",
+                    contentType : 'application/json; charset=utf-8',
+                    dataType : 'json',
+                    data: JSON.stringify(miniChat),
+			  	    error : function(xhr) {
 						console.error("Error posting chat message: status=" + xhr.status + ", statusText=" + xhr.statusText);
 					}
 				});

@@ -1,5 +1,6 @@
 package com.xszymo.hibernate.controllers.chat;
 
+import com.xszymo.hibernate.controllers.chat.chat.boxes.JSONChat;
 import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
 import com.xszymo.hibernate.controllers.chat.tools.Coder;
 import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
@@ -29,43 +30,41 @@ public class ChatBot {
     public LinkedList<MyChat> myChat = new LinkedList<MyChat>();
 
     @GetMapping("createChatId")
-    public String createChatId() {
-        MyChat a = new MyChat();
-        a.id = createId();
-        myChat.add(a);
-        return a.id;
+    public @ResponseBody
+    JSONChat createChatId() {
+        MyChat chat = createNewChat();
+        return new JSONChat(chat);
     }
 
     @PostMapping("checkChatId")
     public @ResponseBody
-    String checkChatId(@RequestBody MyChat chat) {
-        String chatId = chat.id;
-
-        MyChat existingChat = findOne(chatId);
+    JSONChat checkChatId(@RequestBody JSONChat clientChat) {
+        MyChat existingChat = findOne(clientChat.getId());
         if (existingChat == null)
             return createChatId();
 
-        return chatId;
+        return new JSONChat(existingChat);
     }
 
-    @GetMapping
-    public LinkedList<String> getMessages(@RequestParam String chatId, @RequestParam LinkedList<String> messages, @RequestParam String user) {
-        MyChat chat = findOne(chatId);
 
-        if (chat == null || chat.messages.size() == messages.size())
-            return messages;
+    @PostMapping("getMessages")
+    public LinkedList<String> getMessages(@RequestBody JSONChat clientChat) {
+        MyChat chat = findOne(clientChat.getId());
+
+        if (chat == null || chat.messages.size() == clientChat.getMessages().size())
+            return clientChat.getMessages();
 
         return chat.messages;
     }
 
 
-    @PostMapping
-    public void postMessage(@RequestParam String chatId, @RequestParam String message, @RequestParam String user) {
-        MyChat chat = findOne(chatId);
+    @PostMapping("postMessage")
+    public void postMessage(@RequestBody JSONChat clientChat) {
+        MyChat chat = findOne(clientChat.getId());
         if (chat == null)
             return;
 
-        Question a = question.findByMessage(message);
+        Question a = question.findByMessage(clientChat.getMessage());
         String botMessage = "Not implemented yet :(";
 
         if (a != null) {
@@ -77,10 +76,16 @@ public class ChatBot {
                 }
         }
 
-        chat.messages.add("You : " + message);
+        chat.messages.add("You : " + clientChat.getMessage());
         chat.messages.add("Bot : " + botMessage);
     }
 
+    public MyChat createNewChat() {
+        MyChat a = new MyChat();
+        a.id = createId();
+        myChat.add(a);
+        return a;
+    }
 
     public String createId() {
         String code;

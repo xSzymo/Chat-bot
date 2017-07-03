@@ -1,6 +1,6 @@
 package com.xszymo.hibernate.controllers.chat;
 
-import com.xszymo.hibernate.controllers.chat.chat.boxes.ChatJSON;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.JSONChat;
 import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class AllChat {
     }
 
     @PostMapping
-    public void postMessage(@RequestBody ChatJSON chat) {
+    public void postMessage(@RequestBody JSONChat chat) {
         if (myChat == null)
             return;
         if (chat.getMessages() == null)

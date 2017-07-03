@@ -1,6 +1,6 @@
 package com.xszymo.hibernate.controllers.chat;
 
-import com.xszymo.hibernate.controllers.chat.chat.boxes.ChatJSON;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.JSONChat;
 import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
 import com.xszymo.hibernate.controllers.chat.tools.Coder;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +14,23 @@ public class ChatRooms {
 
     @GetMapping("createChatId")
     public @ResponseBody
-    ChatJSON createChatId() {
+    JSONChat createChatId() {
         MyChat chat = createNewChat();
-        return new ChatJSON(chat);
+        return new JSONChat(chat);
     }
 
     @PostMapping("checkChatId")
     public @ResponseBody
-    ChatJSON checkChatId(@RequestBody ChatJSON clientChat) {
+    JSONChat checkChatId(@RequestBody JSONChat clientChat) {
         MyChat existingChat = findOne(clientChat.getId());
         if (existingChat == null)
             return createChatId();
 
-        return new ChatJSON(existingChat);
+        return new JSONChat(existingChat);
     }
 
     @PostMapping("getMessages")
-    public LinkedList<String> getMessages(@RequestBody ChatJSON clientChat) {
+    public LinkedList<String> getMessages(@RequestBody JSONChat clientChat) {
         MyChat chat = findOne(clientChat.getId());
         if (chat == null)
             return clientChat.getMessages();
@@ -40,7 +40,7 @@ public class ChatRooms {
 
 
     @PostMapping("postMessage")
-    public void postMessage(@RequestBody ChatJSON clientChat) {
+    public void postMessage(@RequestBody JSONChat clientChat) {
         MyChat chat = findOne(clientChat.getId());
         if (chat == null)
             return;

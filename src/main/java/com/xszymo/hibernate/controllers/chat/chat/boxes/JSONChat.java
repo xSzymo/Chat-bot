@@ -3,7 +3,7 @@ package com.xszymo.hibernate.controllers.chat.chat.boxes;
 
 import java.util.LinkedList;
 
-public class ChatJSON {
+public class JSONChat {
 
     private String id;
     private String user;
@@ -11,14 +11,14 @@ public class ChatJSON {
     private LinkedList<String> messages = new LinkedList<String>();
 
 
-    public ChatJSON() {
+    public JSONChat() {
     }
 
-    public ChatJSON(String asd) {
+    public JSONChat(String asd) {
         this.id = asd;
     }
 
-    public ChatJSON(MyChat myChat) {
+    public JSONChat(MyChat myChat) {
         this.id = myChat.id;
         this.user = myChat.user;
         this.message = myChat.message;
