@@ -26,4 +26,15 @@ public class Start {
     public String start3() {
         return "ChatBot";
     }
+
+    @GetMapping("/userChat")
+    public String start4() {
+
+        return "UserChat";
+    }
+
+    @GetMapping("/loginPage")
+    public String start5() {
+        return "login";
+    }
 }
