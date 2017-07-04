@@ -2,56 +2,60 @@ package com.xszymo.hibernate.controllers.chat;
 
 import com.xszymo.hibernate.controllers.chat.chat.boxes.JSONChat;
 import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.MyUserChat;
 import com.xszymo.hibernate.controllers.chat.tools.Coder;
-import com.xszymo.hibernate.data.interfaces.AnswersMessageService;
-import com.xszymo.hibernate.data.interfaces.QuestionsMessageService;
-import com.xszymo.hibernate.data.interfaces.UserService;
-import com.xszymo.hibernate.data.tables.Answer;
-import com.xszymo.hibernate.data.tables.Question;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xszymo.hibernate.data.tables.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 
 @RestController
-@RequestMapping("/chatWithUser")
+@RequestMapping("/userChat")
 public class UserChat {
-
-    @Resource(name = "answerMessageService")
-    AnswersMessageService answer;
-
-    @Resource(name = "questionMessageService")
-    QuestionsMessageService question;
-
-    @Autowired
-    UserService userService;
-
-    public LinkedList<MyChat> myChat = new LinkedList<MyChat>();
+    public static LinkedList<MyUserChat> myChat = new LinkedList<MyUserChat>();
 
     @GetMapping("createChatId")
     public @ResponseBody
-    JSONChat createChatId() {
-        MyChat chat = createNewChat();
+    JSONChat createChatId(HttpSession session) {
+        User user = getUser(session);
+
+        if(user == null)
+            return null;
+
+        MyChat chat = createNewChat(user);
         return new JSONChat(chat);
+    }
+
+    @GetMapping("test")
+    public @ResponseBody LinkedList<MyUserChat> halo() {
+        LinkedList<MyUserChat> a = new LinkedList<>();
+        myChat.forEach(x -> a.add(x));
+        return a;
     }
 
     @PostMapping("checkChatId")
     public @ResponseBody
-    JSONChat checkChatId(@RequestBody JSONChat clientChat) {
-        MyChat existingChat = findOne(clientChat.getId());
+    JSONChat checkChatId(@RequestBody JSONChat clientChat, HttpSession session) {
+        User user = getUser(session);
+        clientChat.setUser(user.getLogin());
+
+
+        MyChat existingChat = findOne(clientChat.getId(), user);
         if (existingChat == null)
-            return createChatId();
+            return createChatId(session);
 
         return new JSONChat(existingChat);
     }
 
-
     @PostMapping("getMessages")
-    public LinkedList<String> getMessages(@RequestBody JSONChat clientChat) {
-        MyChat chat = findOne(clientChat.getId());
+    public LinkedList<String> getMessages(@RequestBody JSONChat clientChat, HttpSession session) {
+        User user = getUser(session);
+        clientChat.setUser(user.getLogin());
+        MyUserChat chaterino = findByUser(user);
 
-        if (chat == null || chat.messages.size() == clientChat.getMessages().size())
+        MyChat chat = findOne(clientChat.getId(), user);
+        if (chat == null)
             return clientChat.getMessages();
 
         return chat.messages;
@@ -59,56 +63,76 @@ public class UserChat {
 
 
     @PostMapping("postMessage")
-    public void postMessage(@RequestBody JSONChat clientChat) {
-        MyChat chat = findOne(clientChat.getId());
+    public void postMessage(@RequestBody JSONChat clientChat, HttpSession session) {
+        User user = getUser(session);
+        clientChat.setUser(user.getLogin());
+
+        MyChat chat = findOne(clientChat.getId(), user);
         if (chat == null)
             return;
 
-        Question a = question.findByMessage(clientChat.getMessage());
-        String botMessage = "Not implemented yet :(";
-
-        if (a != null) {
-            long b = 0;
-            for (Answer x : a.getAnswers())
-                if (b <= x.getCounter()) {
-                    botMessage = x.getMessage();
-                    b = x.getCounter();
-                }
-        }
-
-        chat.messages.add("You : " + clientChat.getMessage());
-        chat.messages.add("Bot : " + botMessage);
+        chat.messages.add(clientChat.getUser() + " : " + clientChat.getMessage());
     }
 
-    public MyChat createNewChat() {
-        MyChat a = new MyChat();
-        a.id = createId();
+    public User getUser(HttpSession session) {
+        return (User) session.getAttribute("user");
+    }
+
+
+    public MyChat createNewChat(User user) {
+        MyUserChat a = new MyUserChat();
+        a.user = user;
+
+        MyChat b = new MyChat();
+
+        b.setId(createId(user));
+        a.myChat.add(b);
+
         myChat.add(a);
-        return a;
+        return b;
     }
 
-    public String createId() {
+
+    public String createId(User user) {
         String code;
+        MyUserChat chaterino = findByUser(user);
+        if(chaterino == null) {
+            MyUserChat myUserChat = new MyUserChat();
+            myUserChat.user = user;
+            chaterino = myUserChat;
+        }
 
         boolean cannotLeave;
         outerLoop:
         do {
             cannotLeave = false;
             code = Coder.coder();
-            for (MyChat x : myChat) {
-                if (x.id.equals(code))
-                    cannotLeave = true;
-            }
+            //if(chaterino != null) {
+           //     if(chaterino.myChat.)
+                for (MyChat x : chaterino.myChat) {
+                    if (x.id.equals(code))
+                        cannotLeave = true;
+                }
+          //  }
         } while (cannotLeave);
 
         return code;
     }
 
-    public MyChat findOne(String chatId) {
-        for (MyChat x : myChat) {
+    public MyChat findOne(String chatId, User user) {
+        MyUserChat chaterino = findByUser(user);
+
+        for (MyChat x : chaterino.myChat) {
             if (x.id.equals(chatId))
                 return x;
         }
         return null;
+    }
+
+    public MyUserChat findByUser(User user) {
+        for(MyUserChat x : myChat)
+            if(user.getLogin().equals(x.user))
+                return x;
+            return null;
     }
 }

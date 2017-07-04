@@ -1,5 +1,8 @@
 package com.xszymo.hibernate.controllers.standard;
 
+import com.xszymo.hibernate.controllers.chat.UserChat;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.MyUserChat;
 import com.xszymo.hibernate.controllers.tools.DAO;
 import com.xszymo.hibernate.data.interfaces.UserService;
 import com.xszymo.hibernate.data.tables.User;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedList;
 
 @Controller
 public class Login {
@@ -60,6 +64,10 @@ public class Login {
 
             User user = new User(login, password);
             userService.persist(user);
+            MyUserChat a = new MyUserChat();
+            a.user = user;
+            a.myChat = new LinkedList<>();
+            UserChat.myChat.add(a);
 
             model.addAttribute("msg", "Successful registration  !");
             return "login";

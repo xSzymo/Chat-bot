@@ -26,10 +26,8 @@ $(document).ready(function() {
         }
 
 		that.joinChat = function() {
-			if (that.userName().trim() != '') {
 				keepPolling = true;
 				pollForMessages();
-			}
 		}
 
            function sleep(miliseconds) {
@@ -48,7 +46,7 @@ $(document).ready(function() {
 		if(that.chatId() == null) {
                $.ajax({
                  type: "GET",
-                 url: "chatRoom/createChatId",
+                 url: "userChat/createChatId",
                  success: function(result) {
                  that.chatId(result.id);
                 }});
@@ -62,15 +60,19 @@ $(document).ready(function() {
                     type: "POST",
                     contentType : 'application/json; charset=utf-8',
                     dataType : 'json',
-                    url: "chatRoom/checkChatId",
+                    url: "userChat/checkChatId",
                     data: JSON.stringify(miniChat),
                     success :function(result) {
                         that.chatId(result.id);
                         document.getElementById('chatIdToCopy').innerHTML = that.chatId();
+                         console.log(that.chatId());
+                         console.log(result);
                   }});
                         sleep(50);
 
             console.log(that.chatId());
+
+            sleep(5000);
 
            if(that.chatId() != null) {
 
@@ -81,7 +83,7 @@ $(document).ready(function() {
             }
 			that.activePollingXhr(
 			$.ajax( {
-			url : "chatRoom/getMessages",
+			url : "userChat/getMessages",
 			type : "POST",
             contentType : 'application/json; charset=utf-8',
             dataType : 'json',
@@ -120,7 +122,7 @@ $(document).ready(function() {
                         }
 
 				$.ajax({
-			        url : "chatRoom/postMessage",
+			        url : "userChat/postMessage",
 			        type : "POST",
                     contentType : 'application/json; charset=utf-8',
                     dataType : 'json',
