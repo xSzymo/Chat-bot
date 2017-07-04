@@ -2,7 +2,6 @@ package com.xszymo.hibernate.controllers.standard;
 
 import com.xszymo.hibernate.controllers.tools.DAO;
 import com.xszymo.hibernate.data.interfaces.UserService;
-import com.xszymo.hibernate.data.services.UserServiceImpl;
 import com.xszymo.hibernate.data.tables.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,17 +44,17 @@ public class Login {
             return "choose";
         }
 
-        @RequestMapping(value = "registration", method = RequestMethod.POST)
+        @RequestMapping(value = "userRegistration", method = RequestMethod.POST)
         public String userRegistration (@RequestParam(name = "login", required = false, defaultValue = "") String login,
                 @RequestParam(name = "password", required = false, defaultValue = "") String password,
                 HttpServletRequest request, Model model) {
             Iterable<User> users = userService.findAllUsers();
 
             for (User x : users) {
-                if (x.getUsername() != null)
-                    if (x.getUsername().equals(login)) {
+                if (x.getLogin() != null)
+                    if (x.getLogin().equals(login)) {
                         model.addAttribute("msg", "That user name allready exist  !");
-                        return "loginAndRegistration/registration";
+                        return "registration";
                     }
             }
 

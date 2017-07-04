@@ -25,6 +25,11 @@ public class Start {
         return "AllChat";
     }
 
+    @GetMapping("registration")
+    public String start5() {
+        return "registration";
+    }
+
     @GetMapping("chatRooms")
     public String start2() {
         return "ChatRooms";

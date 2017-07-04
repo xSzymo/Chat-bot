@@ -1,6 +1,6 @@
-/*function copyToClipboard(text) {
+function copyToClipboard(text) {
   window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-}*/
+}
 
 $(document).ready(function() {
 
@@ -14,8 +14,16 @@ $(document).ready(function() {
 		that.messages = ko.observable([]);
 		that.chatId = ko.observable(null);
 		that.activePollingXhr = ko.observable(null);
-		
+
 		var keepPolling = false;
+
+		function wait(ms){
+           var start = new Date().getTime();
+           var end = start;
+           while(end < start + ms) {
+             end = new Date().getTime();
+          }
+        }
 
 		that.joinChat = function() {
 			if (that.userName().trim() != '') {
@@ -23,6 +31,13 @@ $(document).ready(function() {
 				pollForMessages();
 			}
 		}
+
+           function sleep(miliseconds) {
+                var currentTime = new Date().getTime();
+                while (currentTime + miliseconds >= new Date().getTime()) {
+                }
+            }
+
 
 
 		function pollForMessages() {
@@ -33,45 +48,46 @@ $(document).ready(function() {
 		if(that.chatId() == null) {
                $.ajax({
                  type: "GET",
-                 url: "chatWithUser/createChatId",
+                 url: "chatRoom/createChatId",
                  success: function(result) {
                  that.chatId(result.id);
                 }});
            	}
 
-             var chatId = {
-              "id" : that.chatId()
+             var miniChat = {
+              "id" : that.chatId(),
+              "user" : that.userName()
                }
                $.ajax({
                     type: "POST",
                     contentType : 'application/json; charset=utf-8',
                     dataType : 'json',
-                    url: "chatWithUser/checkChatId",
-                    data: JSON.stringify(chatId),
+                    url: "chatRoom/checkChatId",
+                    data: JSON.stringify(miniChat),
                     success :function(result) {
-                    that.chatId(result.id);
+                        that.chatId(result.id);
+                        document.getElementById('chatIdToCopy').innerHTML = that.chatId();
                   }});
+                        sleep(50);
 
-            //document.getElementById('currentChatId').innerHTML = "Chat id : " + that.chatId();
-            document.getElementById('chatIdToCopy').innerHTML = that.chatId();
+            console.log(that.chatId());
 
-
+           if(that.chatId() != null) {
 
              var miniChat = {
               "id" : that.chatId(),
               "user" : that.userName(),
               "message" : that.message()
             }
-			var form = $("#joinChatForm");
 			that.activePollingXhr(
-			$.ajax({
-			url : "chatWithUser/getMessages",
+			$.ajax( {
+			url : "chatRoom/getMessages",
 			type : "POST",
             contentType : 'application/json; charset=utf-8',
             dataType : 'json',
             data: JSON.stringify(miniChat),
 			cache: false,
-				success : function(messages) {
+		    success : function(messages) {
                     var text = "";
 
                     for(var i = 0; i < messages.length; i++)
@@ -88,10 +104,13 @@ $(document).ready(function() {
 				complete : pollForMessages
 			}));
 			$('#message').focus();
+			}
 		}
 
 
+
 		that.postMessage = function() {
+
 			if (that.message().trim() != '') {
 
 			             var miniChat = {
@@ -101,7 +120,7 @@ $(document).ready(function() {
                         }
 
 				$.ajax({
-			        url : "chatWithUser/postMessage",
+			        url : "chatRoom/postMessage",
 			        type : "POST",
                     contentType : 'application/json; charset=utf-8',
                     dataType : 'json',

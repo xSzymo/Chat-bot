@@ -17,7 +17,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
 	public void persistUser(User user) {
-		persistUser(user);
+		persist(user);
 	}
 
 	@SuppressWarnings("unchecked")

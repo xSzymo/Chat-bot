@@ -5,45 +5,46 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Chat</h1>
-<!--	<button id="demo" onclick="copyToClipboard(document.getElementById('chatIdToCopy').innerHTML)"
-			data-bind="visible: activePollingXhr() != null" >Show id</button>-->
+<h1>Chat</h1>
+<button id="demo" onclick="copyToClipboard(document.getElementById('chatIdToCopy').innerHTML)"
+		data-bind="visible: activePollingXhr() != null" >Show id</button>
 
-	<!--<div id="currentChatId"></div>-->
-	<div id="chatIdToCopy" style="display: none;"></div>
+<div id="chatIdToCopy" style="display: none;"></div>
 
-	<form id="joinChatForm" th:action="@{/chatWithUser}" data-bind="visible: activePollingXhr() == null">
-		<p>
-			<label for="user">User: </label>
-			<input id="user" name="user" type="text" data-bind="value: userName"/><br></br>
-			<!--<label for="chatId">Chat id: </label>-->
-			<input id="chatId" name="chatId" type="hidden" data-bind="value: chatId"/>
-			<input name="messages" type="hidden" data-bind="value: messages"/>
-			<button id="start" type="submit" data-bind="click: joinChat">Join Chat</button>
-		</p>
-	</form>
 
-	<form id="leaveChatForm" th:action="@{/chatWithUser}" data-bind="visible: activePollingXhr() != null">
-		<p>
-			You're chatting as <strong data-bind="text: userName"></strong>
-			<button id="leave" type="submit" data-bind="click: leaveChat">Leave Chat</button>
-		</p>
-	</form>
+<form id="joinChatForm" th:action="@{/chat}" data-bind="visible: activePollingXhr() == null">
+	<p>
+		<label for="user">User: </label>
+		<input id="user" name="user" type="text" data-bind="value: userName"/><br></br>
+		<label for="chatId">token : </label>
+		<input id="chatId" name="chatId" type="text" data-bind="value: chatId"/>
+		<input name="messages" type="hidden" data-bind="value: messages"/>
+		<button id="start" type="submit" data-bind="click: joinChat">Join Chat</button>
+		<button id="start1" type="submit" data-bind="click: joinChat">Create chat token</button>
+	</p>
+</form>
 
-	<div data-bind="visible: activePollingXhr() != null">
-		<textarea rows="15" cols="60" readonly="readonly" data-bind="text: chatContent"></textarea>
-	</div>
-	
-	<form id="postMessageForm" th:action="@{/chatWithUser}" data-bind="visible: activePollingXhr() != null">
-		<p>
-			<input id="message" name="message" type="text" data-bind="value: message" />
-			<button id="post" type="submit" data-bind="click: postMessage">Post</button>
-		</p>
-	</form>
+<form id="leaveChatForm" th:action="@{/chat}" data-bind="visible: activePollingXhr() != null">
+	<p>
+		You're chatting as <strong data-bind="text: userName"></strong>
+		<button id="leave" type="submit" data-bind="click: leaveChat">Leave Chat</button>
+	</p>
+</form>
+
+<div data-bind="visible: activePollingXhr() != null">
+	<textarea rows="15" cols="60" readonly="readonly" data-bind="text: chatContent"></textarea>
+</div>
+
+<form id="postMessageForm" th:action="@{/chat}" data-bind="visible: activePollingXhr() != null">
+	<p>
+		<input id="message" name="message" type="text" data-bind="value: message" />
+		<button id="post" type="submit" data-bind="click: postMessage">Post</button>
+	</p>
+</form>
 
 </body>
 <script type="text/javascript" src="../../../resources/js/jquery-1.7.2.min.js" th:src="@{/resources/js/chat/jquery-1.7.2.min.js}"></script>
 <script type="text/javascript" src="../../../resources/js/knockout-2.0.0.js" th:src="@{/resources/js/chat/knockout-2.0.0.js}"></script>
-<script type="text/javascript" src="../../../resources/js/chat2.js" th:src="@{/resources/js/chat/ChatBot.js}"></script>
+<script type="text/javascript" src="../../../resources/js/chat.js" th:src="@{/resources/js/chat/UserChat.js}"></script>
 
 </html>

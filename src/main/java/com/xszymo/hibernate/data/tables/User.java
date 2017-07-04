@@ -53,11 +53,11 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
+	public String getLogin() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setLogin(String username) {
 		this.username = username;
 	}
 
@@ -70,7 +70,7 @@ public class User {
 	}
 
 	public void setUser(User user) {
-		this.username = user.getUsername();
+		this.username = user.getLogin();
 		this.password = user.getPassword();
 	}
 }
