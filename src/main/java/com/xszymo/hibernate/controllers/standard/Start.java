@@ -1,14 +1,22 @@
 package com.xszymo.hibernate.controllers.standard;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
 public class Start {
     @GetMapping
-    public String start() {
+    public String start(HttpSession session, Model model) {
+        boolean canShow = false;
+        if(session.getAttribute("user") != null)
+            canShow = true;
+
+        model.addAttribute("canShow", canShow);
         return "choose";
     }
 
@@ -34,7 +42,8 @@ public class Start {
     }
 
     @GetMapping("/loginPage")
-    public String start5() {
+    public String start5(HttpSession session) {
+        System.out.println(session.getAttribute("user"));
         return "login";
     }
 }

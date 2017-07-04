@@ -38,9 +38,11 @@
 		<a href="/allChat">all chat</a><br></br>
 		<a href="/chatRooms">chat room</a><br></br>
 		<a href="/chatBot">chat bot</a><br></br>
-		<a href="/userChat">user chat</a><br></br>
+		<a th:if="${canShow}" href="/userChat">user chat</a><br></br>
 	</div>
 	<div id="right">
+		<br></br>
+		<a href="loginPage">Login</a><br></br>
 		<br></br>
 		<a href="/load/questions/from/data/base">Load questions from txt file</a><br></br>
 		<br></br>
