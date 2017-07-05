@@ -20,7 +20,7 @@ public class UserChat {
     JSONChat createChatId(HttpSession session) {
         User user = getUser(session);
 
-        if(user == null)
+        if (user == null)
             return null;
 
         MyChat chat = createNewChat(user);
@@ -28,7 +28,8 @@ public class UserChat {
     }
 
     @GetMapping("test")
-    public @ResponseBody LinkedList<MyUserChat> halo() {
+    public @ResponseBody
+    LinkedList<MyUserChat> halo() {
         LinkedList<MyUserChat> a = new LinkedList<>();
         myChat.forEach(x -> a.add(x));
         return a;
@@ -38,12 +39,13 @@ public class UserChat {
     public @ResponseBody
     JSONChat checkChatId(@RequestBody JSONChat clientChat, HttpSession session) {
         User user = getUser(session);
-        clientChat.setUser(user.getLogin());
+        //clientChat.setUser(user.getLogin());
 
 
-        MyChat existingChat = findOne(clientChat.getId(), user);
+        MyChat existingChat = findByChatId(clientChat.getId());
         if (existingChat == null)
             return createChatId(session);
+        System.out.println("id : " + existingChat.getId());
 
         return new JSONChat(existingChat);
     }
@@ -51,12 +53,12 @@ public class UserChat {
     @PostMapping("getMessages")
     public LinkedList<String> getMessages(@RequestBody JSONChat clientChat, HttpSession session) {
         User user = getUser(session);
-        clientChat.setUser(user.getLogin());
-        MyUserChat chaterino = findByUser(user);
+        //clientChat.setUser(user.getLogin());
 
-        MyChat chat = findOne(clientChat.getId(), user);
+        MyChat chat = findByChatId(clientChat.getId());
         if (chat == null)
             return clientChat.getMessages();
+        System.out.println(chat.getId());
 
         return chat.messages;
     }
@@ -67,7 +69,7 @@ public class UserChat {
         User user = getUser(session);
         clientChat.setUser(user.getLogin());
 
-        MyChat chat = findOne(clientChat.getId(), user);
+        MyChat chat = findByChatId(clientChat.getId());
         if (chat == null)
             return;
 
@@ -82,8 +84,8 @@ public class UserChat {
 
 
     public MyChat createNewChat(User user) {
-        for(MyUserChat x : myChat) {
-            if(x.user.getLogin().equals(user.getLogin())) {
+        for (MyUserChat x : myChat) {
+            if (x.user.getLogin().equals(user.getLogin())) {
 
                 MyChat c = new MyChat();
 
@@ -109,48 +111,41 @@ public class UserChat {
 
     public String createId(User user) {
         String code;
-        MyUserChat chaterino = findByUser(user);
-        if(chaterino == null) {
-            MyUserChat myUserChat = new MyUserChat();
-            myUserChat.user = user;
-            chaterino = myUserChat;
-        }
 
         boolean cannotLeave;
         outerLoop:
         do {
             cannotLeave = false;
             code = Coder.coder();
-            //if(chaterino != null) {
-           //     if(chaterino.myChat.)
-                for (MyChat x : chaterino.myChat) {
+            for (MyUserChat x1 : myChat)
+                for (MyChat x : x1.myChat) {
                     if (x.id.equals(code))
                         cannotLeave = true;
                 }
-          //  }
+            //  }
         } while (cannotLeave);
 
         return code;
     }
 
-    public MyChat findOne(String chatId, User user) {
-        MyUserChat chaterino = findByUser(user);
+    public MyUserChat findByUser(User user) {
+        LinkedList<MyUserChat> b = new LinkedList<>();
+        for (MyUserChat x : myChat)
+            if (user.getLogin().equals(x.user.getLogin()))
+                return x;
 
-        try {
-            for (MyChat x : chaterino.myChat) {
-                if (x.id.equals(chatId))
-                    return x;
-            }
-        } catch (NullPointerException e) {
-            //e
-        }
         return null;
     }
 
-    public MyUserChat findByUser(User user) {
-        for(MyUserChat x : myChat)
-            if(user.getLogin().equals(x.user.getLogin()))
-                return x;
-            return null;
+
+    public MyChat findByChatId(String id) {
+        for (MyUserChat x : myChat)
+            for (MyChat x1 : x.myChat)
+                if (x1.getId().equals(id)) {
+                    System.out.println("not null ");
+                    return x1;
+                }
+        System.out.println("NULL");
+        return null;
     }
 }

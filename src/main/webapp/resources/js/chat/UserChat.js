@@ -28,6 +28,7 @@ $(document).ready(function() {
 
 		that.joinChat = function() {
 				keepPolling = true;
+				myId = document.getElementById('chatId').value;
 				pollForMessages();
 		}
 
@@ -45,14 +46,14 @@ $(document).ready(function() {
 			}
             console.log("start : " + myId);
 
-		if(that.chatId() == null) {
-               $.ajax({
-                 type: "GET",
-                 url: "userChat/createChatId",
-                 success: function(result) {
-                 that.chatId(result.id);
-                }});
-           	}
+//		if(that.chatId() == null) {
+//               $.ajax({
+//                 type: "GET",
+//                 url: "userChat/createChatId",
+//                 success: function(result) {
+//                 that.chatId(result.id);
+//                }});
+//           	}
             console.log("medium : " + myId);
 
              var miniChat = {

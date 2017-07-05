@@ -7,5 +7,6 @@ import java.util.LinkedList;
 public class MyUserChat {
 
     public User user;
+    public LinkedList<User> users = new LinkedList<User>();
     public LinkedList<MyChat> myChat = new LinkedList<MyChat>();
 }
