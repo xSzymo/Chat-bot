@@ -42,7 +42,7 @@ public class Login {
 
 
         @RequestMapping(value = "logout", method = RequestMethod.GET)
-        public String logout (HttpServletRequest request, HttpServletResponse response, Model model){
+        public String logout (HttpServletRequest request, HttpServletResponse response, Model model) {
 
             request.getSession().setAttribute("user", null);
             return "choose";
@@ -64,10 +64,10 @@ public class Login {
 
             User user = new User(login, password);
             userService.persist(user);
-            MyUserChat a = new MyUserChat();
-            a.user = user;
-            a.myChat = new LinkedList<>();
-            UserChat.myChat.add(a);
+//            MyUserChat a = new MyUserChat();
+//            a.user = user;
+//            a.myChat = new LinkedList<>();
+//            UserChat.myChat.add(a);
 
             model.addAttribute("msg", "Successful registration  !");
             return "login";

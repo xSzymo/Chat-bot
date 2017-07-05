@@ -7,6 +7,7 @@ $(document).ready(function() {
 	function ChatViewModel() {
 
 		var that = this;
+		var myId = "";
 
 		that.userName = ko.observable('');
 		that.chatContent = ko.observable('');
@@ -42,6 +43,7 @@ $(document).ready(function() {
 			if (!keepPolling) {
 				return;
 			}
+            console.log("start : " + myId);
 
 		if(that.chatId() == null) {
                $.ajax({
@@ -51,9 +53,10 @@ $(document).ready(function() {
                  that.chatId(result.id);
                 }});
            	}
+            console.log("medium : " + myId);
 
              var miniChat = {
-              "id" : that.chatId(),
+              "id" : myId,
               "user" : that.userName()
                }
                $.ajax({
@@ -65,19 +68,21 @@ $(document).ready(function() {
                     success :function(result) {
                         that.chatId(result.id);
                         document.getElementById('chatIdToCopy').innerHTML = that.chatId();
-                         console.log(that.chatId());
-                         console.log(result);
+
+                         myId = result.id;
+// console.log(result);
                   }});
                         sleep(50);
 
-            console.log(that.chatId());
+            console.log("end : " + myId);
+            console.log("\n");
 
-            sleep(5000);
+            //sleep(5000);
 
            if(that.chatId() != null) {
 
              var miniChat = {
-              "id" : that.chatId(),
+              "id" : myId,
               "user" : that.userName(),
               "message" : that.message()
             }
@@ -107,6 +112,7 @@ $(document).ready(function() {
 			}));
 			$('#message').focus();
 			}
+			//sleep(1000);
 		}
 
 
@@ -116,7 +122,7 @@ $(document).ready(function() {
 			if (that.message().trim() != '') {
 
 			             var miniChat = {
-                          "id" : that.chatId(),
+                          "id" : myId,
                           "user" : that.userName(),
                           "message" : $("#postMessageForm input[name=message]").val()
                         }
@@ -133,6 +139,7 @@ $(document).ready(function() {
 				});
 				that.message('');
 			}
+			//sleep(5000);
 		}
 
 		that.leaveChat = function() {

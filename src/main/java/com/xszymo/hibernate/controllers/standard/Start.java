@@ -1,5 +1,8 @@
 package com.xszymo.hibernate.controllers.standard;
 
+import com.xszymo.hibernate.controllers.chat.UserChat;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.MyUserChat;
+import com.xszymo.hibernate.data.tables.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +44,11 @@ public class Start {
     }
 
     @GetMapping("/userChat")
-    public String start4() {
+    public String start4(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        for(MyUserChat x : UserChat.myChat)
+            if(x.user.getLogin().equals(user.getLogin()))
+                model.addAttribute("Ids", x.myChat);
 
         return "UserChat";
     }

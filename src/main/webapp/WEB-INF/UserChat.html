@@ -34,7 +34,16 @@
 	</div>
 	<div id="left">
 		<br></br><br></br><br></br>
-		Chat id :
+		<table>
+			<tr>
+				<th>ID</th>
+			</tr>
+			<tr th:each="prod : ${Ids}">
+				<td th:text="${prod.id}"></td>
+			</tr>
+		</table>
+
+
 	</div>
 	<div id="right">
 		<br></br>

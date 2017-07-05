@@ -71,6 +71,8 @@ public class UserChat {
         if (chat == null)
             return;
 
+        System.out.println(clientChat.getMessage());
+
         chat.messages.add(clientChat.getUser() + " : " + clientChat.getMessage());
     }
 
@@ -80,12 +82,24 @@ public class UserChat {
 
 
     public MyChat createNewChat(User user) {
+        for(MyUserChat x : myChat) {
+            if(x.user.getLogin().equals(user.getLogin())) {
+
+                MyChat c = new MyChat();
+
+                c.setId(createId(user));
+                c.setUser(user.getLogin());
+                x.myChat.add(c);
+                return c;
+            }
+        }
         MyUserChat a = new MyUserChat();
         a.user = user;
 
         MyChat b = new MyChat();
 
         b.setId(createId(user));
+        b.setUser(user.getLogin());
         a.myChat.add(b);
 
         myChat.add(a);
@@ -122,16 +136,20 @@ public class UserChat {
     public MyChat findOne(String chatId, User user) {
         MyUserChat chaterino = findByUser(user);
 
-        for (MyChat x : chaterino.myChat) {
-            if (x.id.equals(chatId))
-                return x;
+        try {
+            for (MyChat x : chaterino.myChat) {
+                if (x.id.equals(chatId))
+                    return x;
+            }
+        } catch (NullPointerException e) {
+            //e
         }
         return null;
     }
 
     public MyUserChat findByUser(User user) {
         for(MyUserChat x : myChat)
-            if(user.getLogin().equals(x.user))
+            if(user.getLogin().equals(x.user.getLogin()))
                 return x;
             return null;
     }
