@@ -1,6 +1,7 @@
 package com.xszymo.hibernate.controllers.standard;
 
 import com.xszymo.hibernate.controllers.chat.UserChat;
+import com.xszymo.hibernate.controllers.chat.chat.boxes.MyChat;
 import com.xszymo.hibernate.controllers.chat.chat.boxes.MyUserChat;
 import com.xszymo.hibernate.data.tables.User;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 
 @Controller
 @RequestMapping("/")
@@ -45,11 +47,36 @@ public class Start {
 
     @GetMapping("/userChat")
     public String start4(Model model, HttpSession session) {
+        boolean canAdd;
         User user = (User) session.getAttribute("user");
-        for(MyUserChat x : UserChat.myChat)
-            if(x.user.getLogin().equals(user.getLogin()))
-                model.addAttribute("Ids", x.myChat);
+        LinkedList<MyChat> chats = new LinkedList<>();
+        for(MyUserChat x : UserChat.myChat) {
+            for (MyChat x1 : x.myChat) {
+                if (x.user.getLogin().equals(user.getLogin())) {
+                    canAdd = true;
+                    for (MyChat x2 : chats) {
+                        if (x2.getId() == x1.getId())
+                            canAdd = false;
+                    }
+                    if (canAdd)
+                        chats.add(x1);
+                }
 
+                canAdd = false;
+                for(User x4 : x.users) {
+                    if(x4.getLogin().equals(user.getLogin())) {
+                        canAdd = true;
+                        for (MyChat x2 : chats) {
+                            if (x2.getId() == x1.getId())
+                                canAdd = false;
+                        }
+                    }
+                }
+                if (canAdd)
+                    chats.add(x1);
+            }
+        }
+        model.addAttribute("Ids", chats);
         return "UserChat";
     }
 

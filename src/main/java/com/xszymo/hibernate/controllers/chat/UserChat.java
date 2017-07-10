@@ -39,10 +39,9 @@ public class UserChat {
     public @ResponseBody
     JSONChat checkChatId(@RequestBody JSONChat clientChat, HttpSession session) {
         User user = getUser(session);
-        //clientChat.setUser(user.getLogin());
 
 
-        MyChat existingChat = findByChatId(clientChat.getId());
+        MyChat existingChat = findByChatId(user, clientChat.getId(), true);
         if (existingChat == null)
             return createChatId(session);
 
@@ -52,9 +51,8 @@ public class UserChat {
     @PostMapping("getMessages")
     public LinkedList<String> getMessages(@RequestBody JSONChat clientChat, HttpSession session) {
         User user = getUser(session);
-        //clientChat.setUser(user.getLogin());
 
-        MyChat chat = findByChatId(clientChat.getId());
+        MyChat chat = findByChatId(user, clientChat.getId(), false);
         if (chat == null)
             return clientChat.getMessages();
 
@@ -67,7 +65,7 @@ public class UserChat {
         User user = getUser(session);
         clientChat.setUser(user.getLogin());
 
-        MyChat chat = findByChatId(clientChat.getId());
+        MyChat chat = findByChatId(user, clientChat.getId(), false);
         if (chat == null)
             return;
 
@@ -118,7 +116,6 @@ public class UserChat {
                     if (x.id.equals(code))
                         cannotLeave = true;
                 }
-            //  }
         } while (cannotLeave);
 
         return code;
@@ -134,10 +131,19 @@ public class UserChat {
     }
 
 
-    public MyChat findByChatId(String id) {
+    public MyChat findByChatId(User user, String id, boolean canAddUserToChat) {
         for (MyUserChat x : myChat)
             for (MyChat x1 : x.myChat)
                 if (x1.getId().equals(id)) {
+                    if(canAddUserToChat) {
+                        boolean canAdd = true;
+                        for(User x6 : x.users)
+                            if(x6.getLogin().equals(user.getLogin()))
+                                canAdd = false;
+                        if(canAdd)
+                            x.users.add(user);
+                    }
+
                     return x1;
                 }
         return null;
