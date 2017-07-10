@@ -45,7 +45,6 @@ public class UserChat {
         MyChat existingChat = findByChatId(clientChat.getId());
         if (existingChat == null)
             return createChatId(session);
-        System.out.println("id : " + existingChat.getId());
 
         return new JSONChat(existingChat);
     }
@@ -58,7 +57,6 @@ public class UserChat {
         MyChat chat = findByChatId(clientChat.getId());
         if (chat == null)
             return clientChat.getMessages();
-        System.out.println(chat.getId());
 
         return chat.messages;
     }
@@ -72,8 +70,6 @@ public class UserChat {
         MyChat chat = findByChatId(clientChat.getId());
         if (chat == null)
             return;
-
-        System.out.println(clientChat.getMessage());
 
         chat.messages.add(clientChat.getUser() + " : " + clientChat.getMessage());
     }
@@ -142,10 +138,8 @@ public class UserChat {
         for (MyUserChat x : myChat)
             for (MyChat x1 : x.myChat)
                 if (x1.getId().equals(id)) {
-                    System.out.println("not null ");
                     return x1;
                 }
-        System.out.println("NULL");
         return null;
     }
 }
