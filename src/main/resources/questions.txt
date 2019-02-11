@@ -1,5 +1,8 @@
 a -.|.- b
-Where are you from? -.|.- 
+test -.|.- test
+hi -.|.- hello
+hello -.|.- hi
+Where are you from? -.|.-
 Where are you from? -.|.- 
 Where do you live? -.|.- 
 Where are you from? -.|.- 
@@ -8,7 +11,7 @@ How many siblings do you have? -.|.-
 Are you in a relationship? -.|.- 
 What do you do? -.|.- 
 Do you have any nicknames? -.|.- 
-Where do you study? -.|.- 
+Where do you study? -.|.-
 How old are you? -.|.- 
 What's your favourite color? -.|.- 
 What's your favourite food? -.|.- 

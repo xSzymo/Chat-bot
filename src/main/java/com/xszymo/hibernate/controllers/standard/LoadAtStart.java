@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class LoadAtStart {
-	public static final String PATH_QUESTIONS = "D:/ProjectsSL/Chat-botV6/src/main/resources/text.txt";
+	public static final String PATH_QUESTIONS = "src/main/resources/questions.txt";
 
 	@Resource(name = "answerMessageService")
 	AnswersMessageService answer;
