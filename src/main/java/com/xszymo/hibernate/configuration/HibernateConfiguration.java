@@ -60,6 +60,7 @@ public class HibernateConfiguration {
 	public HibernateTransactionManager transactionManager(SessionFactory session) {
 		HibernateTransactionManager manager = new HibernateTransactionManager();
 		manager.setSessionFactory(session);
+		manager.setDefaultTimeout(50);
 		return manager;
 	}
 }
