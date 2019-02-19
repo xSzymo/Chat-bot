@@ -1,6 +1,3 @@
-# Chat-bot
-<hr>
-
 ## Description
 For specific instructions check out wiki.<br>
 This project contains a few different kind of chats : 
@@ -14,7 +11,7 @@ This project contains a few different kind of chats :
 - locate docker-compose.yml file and run command in same directory : docker-compose up
 - get onto localhost:8080/chat
 
-### Sources :
+## Sources :
 
 code :  <br>
 https://stackoverflow.com/questions/11016388/send-data-with-jquery-to-an-mvc-controller //David East <br>
