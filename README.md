@@ -1,10 +1,18 @@
 # Chat-bot
+<hr>
 
-## Beta version<br><br>
+## Description
+For specific instructions check out wiki.<br>
+This project contains a few different kind of chats : 
+- chat for everyone
+- chat between 2 or more users
+- chat between user and bot
 
-### Before you start : 
-Look at application.properties in resources & LoadAtStart class where you can load asks from the txt file<br>
-run with "mvn jetty:run"<br>
+## Running with docker : 
+- make sure your port 8080 is free
+- copy docker-compose.yml file from this repository to your local environment
+- locate docker-compose.yml file and run command in same directory : docker-compose up
+- get onto localhost:8080/chat
 
 ### Sources :
 
@@ -17,10 +25,3 @@ http://www.theticblog.com/2015/10/list-of-1000-random-questions-to-ask-people-on
 http://www.saviodsilva.org/<br><br>
 
 I am not author of front-end, just modified it 
-
-
-How to run with docker : 
-- make sure your port 8080 is free
-- copy docker-compose.yml file from this repository to your local environment
-- locate docker-compose.yml file and run command in same directory : docker-compose up
-- get onto localhost:8080/chat
